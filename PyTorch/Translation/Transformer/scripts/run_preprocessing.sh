@@ -11,8 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-DATASET_DIR=/data/wmt14_en_de_joined_dict
-TEXT=examples/translation/wmt14_en_de
+DATASET_DIR=./data/wmt14_en_de_joined_dict
+TEXT=./examples/translation/wmt14_en_de
 
 (
   cd examples/translation
@@ -26,9 +26,13 @@ python preprocess.py \
   --validpref $TEXT/valid \
   --testpref $TEXT/test \
   --destdir ${DATASET_DIR} \
-  --nwordssrc 33712 \
-  --nwordstgt 33712 \
-  --joined-dictionary
+  --joined-dictionary \
+  --padding-factor 1
+
+# TODO(FrostML)
+#  --nwordssrc 33712 \
+#  --nwordstgt 33712 \
+
 
 cp $TEXT/code $DATASET_DIR/code
 cp $TEXT/tmp/valid.raw.de $DATASET_DIR/valid.raw.de

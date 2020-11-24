@@ -166,13 +166,13 @@ class DDPTrainer(object):
             logging_outputs = self._buffered_stats['logging_outputs']
             ooms_fwd = self._buffered_stats['ooms_fwd']
             ooms_bwd = self._buffered_stats['ooms_bwd']
-            if self.args.distributed_world_size > 1:
-                sample_sizes, logging_outputs, ooms_fwd, ooms_bwd = map(
-                    lambda l: list(chain.from_iterable(l)),
-                    zip(*distributed_utils.all_gather_list(
-                        (sample_sizes, logging_outputs, ooms_fwd, ooms_bwd)
-                    ))
-                )
+            # if self.args.distributed_world_size > 1:
+            #     sample_sizes, logging_outputs, ooms_fwd, ooms_bwd = map(
+            #         lambda l: list(chain.from_iterable(l)),
+            #         zip(*distributed_utils.all_gather_list(
+            #             (sample_sizes, logging_outputs, ooms_fwd, ooms_bwd)
+            #         ))
+            #     )
             ooms_fwd = sum(ooms_fwd)
             ooms_bwd = sum(ooms_bwd)
             ooms = ooms_fwd + ooms_bwd #this is always <= distributed_world_size
@@ -206,7 +206,7 @@ class DDPTrainer(object):
                         'updates':1
                         }
 
-            DLLogger.log(step=self._num_updates, data=info_log_data, verbosity=0)
+            DLLogger.log(step=self._num_updates, data=info_log_data, verbosity=1)
             DLLogger.log(step=self._num_updates, data=debug_log_data, verbosity=1)
 
             self.clear_buffered_stats()

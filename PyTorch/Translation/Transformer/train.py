@@ -173,7 +173,8 @@ def train(args, trainer, datasets, epoch_itr):
     """Train the model for one epoch."""
 
     # Initialize data iterator
-    itr = epoch_itr.next_epoch_itr()
+    # TODO(FrostML): shuffle is False. 
+    itr = epoch_itr.next_epoch_itr(False)
 
     # update parameters every N batches
     if epoch_itr.epoch <= len(args.update_freq):

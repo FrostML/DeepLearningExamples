@@ -46,8 +46,9 @@ extra_compile_args['nvcc'] = ['-O3',
                               '-U__CUDA_NO_HALF_CONVERSIONS__',
                               '-gencode', 'arch=compute_70,code=sm_70',
                               '-gencode', 'arch=compute_70,code=compute_70',
-                              '-gencode', 'arch=compute_80,code=sm_80',
-                              '-gencode', 'arch=compute_80,code=compute_80',
+                              # TODO(FrostML)
+                              # '-gencode', 'arch=compute_80,code=sm_80',
+                              # '-gencode', 'arch=compute_80,code=compute_80',
                               ]
 
 strided_batched_gemm = CUDAExtension(
