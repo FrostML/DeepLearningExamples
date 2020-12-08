@@ -40,6 +40,12 @@ from fairseq.criterions import CRITERION_REGISTRY
 
 import dllogger as DLLogger
 import math
+import logging
+
+FORMAT = '%(asctime)s-%(levelname)s: %(message)s'
+logging.basicConfig(level=logging.INFO, format=FORMAT)
+logger = logging.getLogger(__name__)
+
 
 class DDPTrainer(object):
     """Main class for data parallel training.
@@ -194,6 +200,10 @@ class DDPTrainer(object):
             sample_size = sum(log.get('sample_size', 0) for log in logging_outputs)
             ntokens = sum(log.get('ntokens', 0) for log in logging_outputs)
             self.throughput_meter.update(ntokens)
+            if self.args.distributed_world_size > 1:
+                logging.info("rank: %d, tokens: %d, tokens/s: %f\n" % (torch.distributed.get_rank(), ntokens, self.throughput_meter.avg))
+            else:
+                logging.info("rank: %d, tokens: %d, tokens/s: %f\n" % (0, ntokens, self.throughput_meter.avg))
             info_log_data = {
                         'tokens/s':self.throughput_meter.avg,
                         'tokens':ntokens,
