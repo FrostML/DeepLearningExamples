@@ -198,10 +198,10 @@ def train(args, trainer, datasets, epoch_itr):
 
         if i < num_batches - 1 and (i + 1) % update_freq > 0:
             # buffer updates according to --update-freq
-            trainer.train_step(sample, update_params=False, last_step=(i == len(itr)-1))
+            trainer.train_step(sample, update_params=False, last_step=(i == len(itr)-1), step_idx=i)
             continue
         else:
-            trainer.train_step(sample, update_params=True, last_step=(i == len(itr)-1))
+            trainer.train_step(sample, update_params=True, last_step=(i == len(itr)-1), step_idx=i)
 
         # ignore the first mini-batch in words-per-second calculation
         if i == 0:

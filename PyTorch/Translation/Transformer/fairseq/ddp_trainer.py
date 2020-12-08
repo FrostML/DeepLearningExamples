@@ -129,7 +129,7 @@ class DDPTrainer(object):
 
         return extra_state
 
-    def train_step(self, sample, update_params=True, last_step=False):
+    def train_step(self, sample, update_params=True, last_step=False, step_idx=0):
         """Do forward, backward and parameter update."""
         # Set seed based on args.seed and the update number so that we get
         # reproducible results when resuming from checkpoints
@@ -201,9 +201,9 @@ class DDPTrainer(object):
             ntokens = sum(log.get('ntokens', 0) for log in logging_outputs)
             self.throughput_meter.update(ntokens)
             if self.args.distributed_world_size > 1:
-                logging.info("rank: %d, tokens: %d, tokens/s: %f\n" % (torch.distributed.get_rank(), ntokens, self.throughput_meter.avg))
+                logging.info("step_idx: %d, rank: %d, tokens: %d, tokens/s: %f\n" % (step_idx, torch.distributed.get_rank(), ntokens, self.throughput_meter.avg))
             else:
-                logging.info("rank: %d, tokens: %d, tokens/s: %f\n" % (0, ntokens, self.throughput_meter.avg))
+                logging.info("step_idx: %d, rank: %d, tokens: %d, tokens/s: %f\n" % (step_idx, 0, ntokens, self.throughput_meter.avg))
             info_log_data = {
                         'tokens/s':self.throughput_meter.avg,
                         'tokens':ntokens,
