@@ -174,7 +174,7 @@ def train(args, trainer, datasets, epoch_itr):
 
     # Initialize data iterator
     # TODO(FrostML): shuffle is False. 
-    itr = epoch_itr.next_epoch_itr(False)
+    itr = epoch_itr.next_epoch_itr(True)
 
     # update parameters every N batches
     if epoch_itr.epoch <= len(args.update_freq):

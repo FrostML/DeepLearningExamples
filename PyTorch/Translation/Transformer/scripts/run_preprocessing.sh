@@ -26,12 +26,9 @@ python preprocess.py \
   --validpref $TEXT/valid \
   --testpref $TEXT/test \
   --destdir ${DATASET_DIR} \
-  --joined-dictionary \
-  --padding-factor 1
-
-# TODO(FrostML)
-#  --nwordssrc 33712 \
-#  --nwordstgt 33712 \
+  --nwordssrc 33712 \
+  --nwordstgt 33712 \
+  --joined-dictionary
 
 
 cp $TEXT/code $DATASET_DIR/code
