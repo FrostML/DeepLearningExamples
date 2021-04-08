@@ -24,13 +24,13 @@
 #include <cuda_runtime.h>
 #include <vector>
 
-#ifdef PADDLE_CUDA
-#ifdef PADDLE_ON_INFERENCE
-#include "paddle/include/experimental/ext_all.h"
-#else
+// #ifdef PADDLE_CUDA
+// #ifdef PADDLE_ON_INFERENCE
+// #include "paddle/include/experimental/ext_all.h"
+// #else
 #include "paddle/extension.h"
-#endif
-#endif
+// #endif
+// #endif
 
 #ifdef GOOGLE_CUDA
 #include "tensorflow/core/framework/op.h"
