@@ -133,7 +133,12 @@ if(BUILD_TRT)
   list(APPEND COMMON_LIB_DIRS ${TRT_PATH}/lib)
 endif()
 
-set(PYTHON_PATH "python" CACHE STRING "Python path")
+if(NOT PY_CMD)
+  set(PYTHON_PATH "python" CACHE STRING "Python path")
+else()
+  set(PYTHON_PATH ${PY_CMD} CACHE STRING "Python path")
+endif()
+#set(PYTHON_PATH "python" CACHE STRING "Python path")
 if(BUILD_THS)
   execute_process(COMMAND ${PYTHON_PATH} "-c" "from __future__ import print_function; import torch; print(torch.__version__,end='');"
                   RESULT_VARIABLE _PYTHON_SUCCESS
@@ -177,12 +182,9 @@ endif()
 
 if(BUILD_PD)
   add_definitions(-DPADDLE_CUDA=1)
+  add_definitions(-DPADDLE_WITH_CUDA)
 
-  if(NOT PY_CMD)
-    set(PYTHON_PATH "python" CACHE STRING "Python path")
-  else()
-    set(PYTHON_PATH ${PY_CMD} CACHE STRING "Python path")
-  endif()
+  #set(PYTHON_PATH "python" CACHE STRING "Python path")
 
   execute_process(COMMAND ${PYTHON_PATH} "-c" "from __future__ import print_function; import paddle; print(paddle.sysconfig.get_include())"
                   RESULT_VARIABLE _INC_PYTHON_SUCCESS

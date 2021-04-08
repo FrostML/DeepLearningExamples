@@ -90,43 +90,43 @@ public:
   }
 };
 
-#ifdef PADDLE_CUDA
-template <>
-class Allocator<AllocatorType::PD> : public IAllocator {
-  std::shared_ptr<std::vector<paddle::Tensor>> allocated_tensor_vector;
+// #ifdef PADDLE_CUDA
+// template <>
+// class Allocator<AllocatorType::PD> : public IAllocator {
+//   std::shared_ptr<std::vector<paddle::Tensor>> allocated_tensor_vector;
 
- public:
-  Allocator()
-    : allocated_tensor_vector(
-      std::make_shared<std::vector<paddle::Tensor>>()) {}
+//  public:
+//   Allocator()
+//     : allocated_tensor_vector(
+//       std::make_shared<std::vector<paddle::Tensor>>()) {}
 
-  void *malloc(size_t size, const bool is_set_zero = true) const {
-    int64_t buf_size = static_cast<int64_t>(size);
-    std::vector<int64_t> buf_dims({buf_size});
-    auto buf = paddle::Tensor(paddle::PlaceType::kGPU, buf_dims);
-    allocated_tensor_vector->push_back(buf);
+//   void *malloc(size_t size, const bool is_set_zero = true) const {
+//     int64_t buf_size = static_cast<int64_t>(size);
+//     std::vector<int64_t> buf_dims({buf_size});
+//     auto buf = paddle::Tensor(paddle::PlaceType::kGPU, buf_dims);
+//     allocated_tensor_vector->push_back(buf);
 
-    auto* flat = buf.mutable_data<uint8_t>(paddle::PlaceType::kGPU);
-    void *ptr = reinterpret_cast<void *>(flat);
-    if (is_set_zero) {
-      cudaMemsetAsync(ptr, 0, buf_size, stream_);
-    }
-    return ptr;
-  }
+//     auto* flat = buf.mutable_data<uint8_t>(paddle::PlaceType::kGPU);
+//     void *ptr = reinterpret_cast<void *>(flat);
+//     if (is_set_zero) {
+//       cudaMemsetAsync(ptr, 0, buf_size, stream_);
+//     }
+//     return ptr;
+//   }
 
-  void free(void *ptr) const {
-#ifndef NDEBUG
-    printf("call from allocator free\n");
-#endif
-    return;
-  }
+//   void free(void *ptr) const {
+// #ifndef NDEBUG
+//     printf("call from allocator free\n");
+// #endif
+//     return;
+//   }
 
   // ~Allocator() {
   //   allocated_tensor_vector->clear();
   //   delete allocated_tensor_vector;
   // }
-};
-#endif
+// };
+// #endif
 
 #ifdef GOOGLE_CUDA
 using namespace tensorflow;
