@@ -90,7 +90,7 @@ public:
   }
 };
 
-#ifdef PADDLE_CUDA
+// #ifdef PADDLE_CUDA
 template <>
 class Allocator<AllocatorType::PD> : public IAllocator {
   std::shared_ptr<std::vector<paddle::Tensor>> allocated_tensor_vector;
@@ -127,7 +127,7 @@ class Allocator<AllocatorType::PD> : public IAllocator {
   //   delete allocated_tensor_vector;
   // }
 };
-#endif
+// #endif
 
 #ifdef GOOGLE_CUDA
 using namespace tensorflow;
