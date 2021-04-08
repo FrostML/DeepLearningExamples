@@ -97,7 +97,7 @@ class Allocator<AllocatorType::PD> : public IAllocator {
   cudaStream_t stream_;
 
  public:
-  Allocator()
+  Allocator(cudaStream_t stream)
     : allocated_tensor_vector(
       std::make_shared<std::vector<paddle::Tensor>>()), stream_(stream) {}
 
