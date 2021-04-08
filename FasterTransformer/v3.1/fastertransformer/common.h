@@ -47,7 +47,8 @@ enum class AllocatorType
 {
   CUDA,
   TF,
-  TH
+  TH,
+  PD
 };
 
 #define PRINT_FUNC_NAME_()                                          \
