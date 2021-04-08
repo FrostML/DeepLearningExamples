@@ -94,11 +94,12 @@ public:
 template <>
 class Allocator<AllocatorType::PD> : public IAllocator {
   std::shared_ptr<std::vector<paddle::Tensor>> allocated_tensor_vector;
+  cudaStream_t stream_;
 
  public:
   Allocator()
     : allocated_tensor_vector(
-      std::make_shared<std::vector<paddle::Tensor>>()) {}
+      std::make_shared<std::vector<paddle::Tensor>>()), stream_(stream) {}
 
   void *malloc(size_t size, const bool is_set_zero = true) const {
     int64_t buf_size = static_cast<int64_t>(size);
