@@ -122,10 +122,10 @@ class Allocator<AllocatorType::PD> : public IAllocator {
     return;
   }
 
-  ~Allocator() {
-    allocated_tensor_vector->clear();
-    delete allocated_tensor_vector;
-  }
+  // ~Allocator() {
+  //   allocated_tensor_vector->clear();
+  //   delete allocated_tensor_vector;
+  // }
 };
 #endif
 
