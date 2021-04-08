@@ -108,9 +108,9 @@ class Allocator<AllocatorType::PD> : public IAllocator {
 
     auto* flat = buf.mutable_data<uint8_t>(paddle::PlaceType::kGPU);
     void *ptr = reinterpret_cast<void *>(flat);
-    // if (is_set_zero) {
-    //   cudaMemsetAsync(ptr, 0, buf_size, stream_);
-    // }
+    if (is_set_zero) {
+      cudaMemsetAsync(ptr, 0, buf_size, stream_);
+    }
     return ptr;
   }
 

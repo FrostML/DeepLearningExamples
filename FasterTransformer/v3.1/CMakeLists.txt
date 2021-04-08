@@ -176,6 +176,8 @@ print(sysconfig.get_config_var('SO'));"
 endif()
 
 if(BUILD_PD)
+  add_definitions(-DPADDLE_CUDA=1)
+
   if(NOT PY_CMD)
     set(PYTHON_PATH "python" CACHE STRING "Python path")
   else()
