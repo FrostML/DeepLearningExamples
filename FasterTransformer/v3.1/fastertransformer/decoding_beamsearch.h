@@ -237,7 +237,14 @@ public:
                         args_.start_id_, args_.batch_size_, args_.beam_width_, decoding_params.stream);
 #ifndef NDEBUG
     cudaDeviceSynchronize();
+    std::cout << "===============================" << std::endl;
     check_cuda_error(cudaGetLastError());
+    std::cout << "===============================" << std::endl;
+    std::cout << "===============================" << std::endl;
+    std::cout << "===============================" << std::endl;
+    std::cout << "===============================" << std::endl;
+    std::cout << "===============================" << std::endl;
+    std::cout << "===============================" << std::endl;
 
     /*
       User can check the init by init_kernel_check.
